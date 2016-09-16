@@ -1,47 +1,60 @@
+# Maintainer: Mike Krüger <mikekrueger81@gmail.com>
+
 pkgname=calamares
-pkgver=2.4.2
+pkgver=2.4.1
+_pkgver=2.4.1
 pkgrel=1
 pkgdesc='Distribution-independent installer framework'
-arch=('x86_64')
+arch=('i686' 'x86_64')
 license=(GPL)
-url="https://github.com/SwagArch/calamares"
+url="https://github.com/calamares"
 license=('LGPL')
-depends=('kconfig' 'kcoreaddons' 'ki18n' 'solid' 'yaml-cpp' 'parted' 'boost' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gptfdisk' 'kdebase-runtime' 'rsync' 'python' 'breeze' 'dmidecode' 'ki18n' 'squashfs-tools' 'kpmcore' 'qt5-webengine' 'qt5ct' 'kparts')
-makedepends=('extra-cmake-modules' 'qt5-tools' 'git')
+depends=('kconfig' 'kcoreaddons' 'ki18n' 'solid' 'yaml-cpp' 'kpmcore>=2.2.0' 'mkinitcpio-openswap'
+         'boost-libs' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gptfdisk' 'gtk-update-icon-cache')
+makedepends=('extra-cmake-modules' 'qt5-tools' 'git' 'boost')
 backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/displaymanager.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source=("git+https://github.com/SwagArch/calamares#branch=master")
+source+=("$pkgname-$pkgver.tar.gz::https://github.com/calamares/calamares/releases/download/v$_pkgver/calamares-$_pkgver.tar.gz"
+         git+https://github.com/SwagArch/calamares-configs#branch=master)
 
-sha256sums=('SKIP')
+sha256sums=('ab1ea9c57bfeccea1282813fa67d3ee97ee03f8673af002c13fdda8dc75ef028'
+            'SKIP')
 
 prepare() {
-	cd "$srcdir/$pkgname"
+	cp -a ${srcdir}/calamares-configs/* ${srcdir}/calamares-${_pkgver}
+	rm -rf ${srcdir}/calamares-configs
+	cd ${srcdir}/calamares-${_pkgver}
 }
 
+
 build() {
-	cd "$srcdir/$pkgname"
+	cd ${srcdir}/calamares-${_pkgver}
 
 	mkdir -p build
 	cd build
         cmake .. \
               -DCMAKE_BUILD_TYPE=Release \
               -DCMAKE_INSTALL_PREFIX=/usr \
-              -DWITH_PARTITIONMANAGER=1 \
-              -DCMAKE_INSTALL_LIBDIR=lib
+              -DCMAKE_INSTALL_LIBDIR=lib \
+              -DSKIP_MODULES="webview interactiveterminal"
         make
 }
 
 package() {
-	cd "$srcdir/$pkgname/build"
+	cd ${srcdir}/calamares-${_pkgver}/build
 	make DESTDIR="$pkgdir" install
-	install -Dm644 "../settings.conf" "$pkgdir/usr/share/calamares/settings.conf"
-	mkdir -p /usr/share/icons/
-	install -Dm644 "../calamares.png" "$pkgdir/usr/share/icons/calamares.png"
-	install -Dm644 "../calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
-	cd "$srcdir/$pkgname"
-	rm -r build
+	install -Dm644 "../src/modules/users/users.conf" "$pkgdir/usr/share/calamares/modules/users.conf"
+    install -Dm644 "../src/modules/mrpacman/mrpacman.conf" "$pkgdir/usr/share/calamares/modules/mrpacman.conf"
+    install -Dm644 "../src/modules/removeuser/removeuser.conf" "$pkgdir/usr/share/calamares/modules/removeuser.conf"
+    install -Dm644 "../src/modules/unpackfs/unpackfs.conf" "$pkgdir/usr/share/calamares/modules/unpackfs.conf"
+    install -Dm644 "../settings.conf" "$pkgdir/usr/share/calamares/settings.conf"
+    install -Dm644 "../calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
+    install -Dm644 "../calamares.png" "$pkgdir/usr/share/icons/calamares.png"
+	rm -r "$pkgdir/usr/lib/calamares/modules/dummyprocess/"
+	rm -r "$pkgdir/usr/lib/calamares/modules/dummypython/"
+	rm "$pkgdir/usr/share/calamares/modules/dummypython.conf"
 }
 
