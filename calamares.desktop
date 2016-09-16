@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Install SwagArch GNU/Linux
+GenericName=Live Installer
+Comment=Install the operating system to disk
+Exec=su -c "QT_QPA_PLATFORMTHEME=qt5ct QT_STYLE_OVERRIDE=gtk2 calamares"
+Icon=/usr/share/icons/calamares.png
+Terminal=False
+Type=Application
+Categories=System;
