@@ -24,37 +24,38 @@ sha256sums=('ab1ea9c57bfeccea1282813fa67d3ee97ee03f8673af002c13fdda8dc75ef028'
             'SKIP')
 
 prepare() {
-	cp -a ${srcdir}/calamares-configs/* ${srcdir}/calamares-${_pkgver}
-	rm -rf ${srcdir}/calamares-configs
-	cd ${srcdir}/calamares-${_pkgver}
+    cp -a ${srcdir}/calamares-configs/* ${srcdir}/calamares-${_pkgver}
+    rm -rf ${srcdir}/calamares-configs
+    cd ${srcdir}/calamares-${_pkgver}
 }
 
 
 build() {
-	cd ${srcdir}/calamares-${_pkgver}
+    cd ${srcdir}/calamares-${_pkgver}
 
-	mkdir -p build
-	cd build
+    mkdir -p build
+    cd build
         cmake .. \
               -DCMAKE_BUILD_TYPE=Release \
               -DCMAKE_INSTALL_PREFIX=/usr \
+              -DWITH_PARTITIONMANAGER=1 \
               -DCMAKE_INSTALL_LIBDIR=lib \
               -DSKIP_MODULES="webview interactiveterminal"
         make
 }
 
 package() {
-	cd ${srcdir}/calamares-${_pkgver}/build
-	make DESTDIR="$pkgdir" install
-	install -Dm644 "../src/modules/users/users.conf" "$pkgdir/usr/share/calamares/modules/users.conf"
+    cd ${srcdir}/calamares-${_pkgver}/build
+    make DESTDIR="$pkgdir" install
+    install -Dm644 "../src/modules/users/users.conf" "$pkgdir/usr/share/calamares/modules/users.conf"
     install -Dm644 "../src/modules/mrpacman/mrpacman.conf" "$pkgdir/usr/share/calamares/modules/mrpacman.conf"
     install -Dm644 "../src/modules/removeuser/removeuser.conf" "$pkgdir/usr/share/calamares/modules/removeuser.conf"
     install -Dm644 "../src/modules/unpackfs/unpackfs.conf" "$pkgdir/usr/share/calamares/modules/unpackfs.conf"
     install -Dm644 "../settings.conf" "$pkgdir/usr/share/calamares/settings.conf"
     install -Dm644 "../calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
     install -Dm644 "../calamares.png" "$pkgdir/usr/share/icons/calamares.png"
-	rm -r "$pkgdir/usr/lib/calamares/modules/dummyprocess/"
-	rm -r "$pkgdir/usr/lib/calamares/modules/dummypython/"
-	rm "$pkgdir/usr/share/calamares/modules/dummypython.conf"
+    rm -r "$pkgdir/usr/lib/calamares/modules/dummyprocess/"
+    rm -r "$pkgdir/usr/lib/calamares/modules/dummypython/"
+    rm "$pkgdir/usr/share/calamares/modules/dummypython.conf"
 }
 
