@@ -10,7 +10,7 @@ license=(GPL)
 url="https://github.com/calamares"
 license=('LGPL')
 depends=('kconfig' 'kcoreaddons' 'ki18n' 'solid' 'yaml-cpp' 'kpmcore>=2.2.0' 'mkinitcpio-openswap'
-         'boost-libs' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gptfdisk' 'gtk-update-icon-cache')
+         'boost-libs' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gptfdisk' 'gtk-update-icon-cache' 'rsync')
 makedepends=('extra-cmake-modules' 'qt5-tools' 'git' 'boost')
 backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/displaymanager.conf'
