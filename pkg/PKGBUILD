@@ -38,9 +38,8 @@ build() {
         cmake .. \
               -DCMAKE_BUILD_TYPE=Release \
               -DCMAKE_INSTALL_PREFIX=/usr \
-              -DWITH_PARTITIONMANAGER=1 \
               -DCMAKE_INSTALL_LIBDIR=lib \
-              -DSKIP_MODULES="webview interactiveterminal"
+              -DSKIP_MODULES="webview interactiveterminal initramfs dracut dummyprocess dummypython packages netinstall license"
         make
 }
 
