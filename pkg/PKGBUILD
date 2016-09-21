@@ -46,11 +46,6 @@ build() {
 package() {
     cd ${srcdir}/calamares-${_pkgver}/build
     make DESTDIR="$pkgdir" install
-    install -Dm644 "../src/modules/users/users.conf" "$pkgdir/usr/share/calamares/modules/users.conf"
-    install -Dm644 "../src/modules/mrpacman/mrpacman.conf" "$pkgdir/usr/share/calamares/modules/mrpacman.conf"
-    install -Dm644 "../src/modules/removeuser/removeuser.conf" "$pkgdir/usr/share/calamares/modules/removeuser.conf"
-    install -Dm644 "../src/modules/unpackfs/unpackfs.conf" "$pkgdir/usr/share/calamares/modules/unpackfs.conf"
-    install -Dm644 "../settings.conf" "$pkgdir/usr/share/calamares/settings.conf"
     install -Dm644 "../calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
     install -Dm644 "../calamares.png" "$pkgdir/usr/share/icons/calamares.png"
     rm -r "$pkgdir/usr/lib/calamares/modules/dummyprocess/"
