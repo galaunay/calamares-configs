@@ -95,11 +95,15 @@ def run_operations(pkgman, entry):
     :param entry:
     """
 
+    vbox = False
+    if virtualbox:
+        vbox = True
+
     for key in entry.keys():
         if key == "install":
             pkgman.install(entry[key])
         elif key == "remove":
-            if virtualbox:
+            if vbox:
                 packagename = entry[key]
                 part = packagename[0:10].lower()
                 if part != "virtualbox":
