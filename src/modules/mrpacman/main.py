@@ -104,10 +104,10 @@ def run_operations(pkgman, entry):
             pkgman.install(entry[key])
         elif key == "remove":
             if vbox:
-                packagename = entry[key]
+                packagename = str(entry[key])
                 part = packagename[0:10].lower()
                 if part != "virtualbox":
-                    pkgman.remove(packagename)
+                    pkgman.remove(entry[key])
             else:
                 pkgman.remove(entry[key])
         elif key == "localInstall":
