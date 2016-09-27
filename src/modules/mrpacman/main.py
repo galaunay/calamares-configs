@@ -71,13 +71,13 @@ class PackageManager:
             check_target_env_call(["pacman", "-Syyu", "--noconfirm"])
 
 def virtualbox():
-	command = "dmidecode -s system-product-name"
-	output = subprocess.check_output(['sh','-c', command]).decode('ascii')
-	substring = output[0:10].lower()
-	if substring == "virtualbox":
-		return True
-	else:
-		return False
+    command = "dmidecode -s system-product-name"
+    output = subprocess.check_output(['sh','-c', command]).decode('ascii')
+    substring = output[0:10].lower()
+    if substring == "virtualbox":
+        return True
+    else:
+        return False
 
 
 def connected(reference):
@@ -99,13 +99,13 @@ def run_operations(pkgman, entry):
         if key == "install":
             pkgman.install(entry[key])
         elif key == "remove":
-			if virtualbox:
-				packagename = entry[key]
-				part = packagename[0:10].lower()
-				if part != "virtualbox":
-					pkgman.remove(packagename)
-			else:
-            	pkgman.remove(entry[key])
+            if virtualbox:
+                packagename = entry[key]
+                part = packagename[0:10].lower()
+                if part != "virtualbox":
+                    pkgman.remove(packagename)
+            else:
+                pkgman.remove(entry[key])
         elif key == "localInstall":
             pkgman.install(entry[key], from_local=True)
 
