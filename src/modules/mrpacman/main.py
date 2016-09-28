@@ -70,14 +70,31 @@ class PackageManager:
         if self.backend == "pacman":
             check_target_env_call(["pacman", "-Syyu", "--noconfirm"])
 
-def virtualbox():
+
+
+virtualbox = False #global var for virtualbox_check
+
+def virtualbox_check():
     command = "dmidecode -s system-product-name"
     output = subprocess.check_output(['sh','-c', command]).decode('ascii')
     substring = output[0:10].lower()
+
+    global virtualbox
     if substring == "virtualbox":
-        return True
+        virtualbox = True
     else:
-        return False
+        virtualbox = False
+
+    return virtualbox
+
+def packagelist_filter(pkgs, pkg_remove_filter, first_index, last_index):
+    new_package_list = []
+    for pkg in pkgs:
+        part = pkg[first_index:last_index].lower()
+        if part != pkg_remove_filter:
+            new_package_list.append(pkg)
+
+    return new_package_list
 
 
 def connected(reference):
@@ -95,19 +112,12 @@ def run_operations(pkgman, entry):
     :param entry:
     """
 
-    vbox = False
-    if virtualbox:
-        vbox = True
-
     for key in entry.keys():
         if key == "install":
             pkgman.install(entry[key])
         elif key == "remove":
-            if vbox:
-                packagename = str(entry[key])
-                part = packagename[0:10].lower()
-                if part != "virtualbox":
-                    pkgman.remove(entry[key])
+            if virtualbox:
+                pkgman.remove(packagelist_filter(entry[key], "virtualbox", 0, 10))
             else:
                 pkgman.remove(entry[key])
         elif key == "localInstall":
@@ -120,6 +130,8 @@ def run():
 
     :return:
     """
+
+    virtualbox_check()
 
     backend = libcalamares.job.configuration.get("backend")
 
