@@ -68,7 +68,10 @@ class PackageManager:
         """
 
         if self.backend == "pacman":
-            check_target_env_call(["pacman", "-Syyu", "--noconfirm"])
+            try:
+                check_target_env_call(["pacman", "-Syyu", "--noconfirm"])
+            except:
+                print("unresolvable package conflicts detected")
 
 
 
