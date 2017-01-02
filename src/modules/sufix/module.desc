@@ -1,6 +1,0 @@
----
-type:       "job"
-name:       "sufix"
-interface:  "python"
-requires:   []
-script:     "main.py"
