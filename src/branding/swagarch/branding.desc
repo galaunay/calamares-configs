@@ -4,10 +4,10 @@ componentName:  swagarch
 strings:
     productName:         SwagArch GNU/Linux
     shortProductName:    SwagArch
-    version:             16.12
-    shortVersion:        16.12
-    versionedName:       SwagArch GNU/Linux 16.12
-    shortVersionedName:  SwagArch GNU/Linux 16.12
+    version:             17.01
+    shortVersion:        17.01
+    versionedName:       SwagArch GNU/Linux 17.01
+    shortVersionedName:  SwagArch GNU/Linux 17.01
     bootloaderEntryName: SwagArch
     
 
