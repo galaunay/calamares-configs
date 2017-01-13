@@ -1,8 +1,8 @@
-# Maintainer: Mike Krüger <mikekrueger81@gmail.com>
+# Maintainer: Mike Krüger <mikekrueger81[at]gmail.com>
 
 pkgname=calamares
-pkgver=master
-_pkgver=master
+pkgver=2.4.6
+_pkgver=2.4.6
 pkgrel=1
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
@@ -17,10 +17,10 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source+=("https://github.com/calamares/calamares/archive/master.zip"
+source+=("https://github.com/calamares/calamares/releases/download/v${_pkgver}/calamares-${_pkgver}.tar.gz"
          git+https://github.com/SwagArch/calamares-configs#branch=master)
 
-sha256sums=('SKIP'
+sha256sums=('c091ad0db9b69b7552d7f282317ba4a4453d7e5ca7ee4bf98f605fe43c63597e'
             'SKIP')
 
 prepare() {
