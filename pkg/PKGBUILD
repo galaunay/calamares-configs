@@ -1,8 +1,7 @@
 # Maintainer: Mike Krüger <mikekrueger81[at]gmail.com>
 
 pkgname=calamares
-pkgver=2.4.6
-_pkgver=2.4.6
+pkgver=3.0
 pkgrel=1
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
@@ -17,21 +16,21 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source+=("https://github.com/calamares/calamares/releases/download/v${_pkgver}/calamares-${_pkgver}.tar.gz"
+source+=("https://github.com/calamares/calamares/releases/download/v${pkgver}/calamares-${pkgver}.tar.gz"
          git+https://github.com/SwagArch/calamares-configs#branch=master)
 
-sha256sums=('c091ad0db9b69b7552d7f282317ba4a4453d7e5ca7ee4bf98f605fe43c63597e'
+sha256sums=('2b5cda3e340c822348ba98d7a06e9764abb1e6eaefbfc8fd14117acfac6019d2'
             'SKIP')
 
 prepare() {
-    cp -a ${srcdir}/calamares-configs/* ${srcdir}/calamares-${_pkgver}
+    cp -a ${srcdir}/calamares-configs/* ${srcdir}/calamares-${pkgver}
     rm -rf ${srcdir}/calamares-configs
-    cd ${srcdir}/calamares-${_pkgver}
+    cd ${srcdir}/calamares-${pkgver}
 }
 
 
 build() {
-    cd ${srcdir}/calamares-${_pkgver}
+    cd ${srcdir}/calamares-${pkgver}
 
     mkdir -p build
     cd build
@@ -44,7 +43,7 @@ build() {
 }
 
 package() {
-    cd ${srcdir}/calamares-${_pkgver}/build
+    cd ${srcdir}/calamares-${pkgver}/build
     make DESTDIR="$pkgdir" install
     install -Dm644 "../calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
     install -Dm644 "../calamares.png" "$pkgdir/usr/share/icons/calamares.png"
