@@ -1,2 +1,2 @@
 # calamares-configs
-The swagarch modules and config files for the calamares installer framework
+The archi3 modules and config files for the calamares installer framework
