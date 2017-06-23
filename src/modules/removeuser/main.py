@@ -3,8 +3,7 @@
 #
 # === This file is part of Calamares - <http://github.com/calamares> ===
 #
-#   Copyright 2015, Teo Mrnjavac <teo@kde.org>
-#   Copyright 2017. Alf Gaida <agaida@siduction.org>
+#   Copyright 2015, Teo Mrnjavac <teo@kde.org> #   Copyright 2017. Alf Gaida <agaida@siduction.org>
 #
 #   Calamares is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -38,14 +37,9 @@ def run():
                                  "'userdel' terminated with exit code",
                                  "{}.".format(e.returncode))
     # remove autologin if present
-    autologinfile = "/etc/systemd/system/autologin@.conf"
-    if os.path.isfile(autologinfile):
-        with open(autologinfile, "r") as f:
-            new_text = ""
-            for line in f.readlines():
-                if username in line:
-                    continue
-                new_text += "\n" + line
-        with open(autologinfile, "w") as f:
-            f.write(new_text)
-            return None
+    try:
+        libcalamares.utils.check_target_env_call(["systemctl", "disable",
+                                                  "autologin@{}.service".format(username)])
+    except:
+        pass
+
