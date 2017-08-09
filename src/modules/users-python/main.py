@@ -20,7 +20,6 @@
 
 import subprocess
 import libcalamares
-import os
 
 
 def run():
@@ -30,15 +29,9 @@ def run():
     username = libcalamares.globalstorage.value("username")
     try:
         libcalamares.utils.check_target_env_call(["systemctl", "enable",
-                                                  "autologin@{}".format(username)])
+                                                  "autologin@{}"
+                                                  .format(username)])
     except subprocess.CalledProcessError as e:
         libcalamares.utils.debug("Cannot configure autologin.",
                                  "'systemctl' terminated with exit code",
                                  "{}.".format(e.returncode))
-    try:
-        libcalamares.utils.check_target_env_call(["freshclam"])
-    except subprocess.CalledProcessError as e:
-        libcalamares.utils.debug("Cannot update clam database.",
-                                 "'freshclam' terminated with exit code",
-                                 "{}.".format(e.returncode))
-
